@@ -52,8 +52,6 @@
           
             <a class="main-nav-link" href="/">首页</a>
           
-            <a class="main-nav-link" href="/categories/life">生活</a>
-          
             <a class="main-nav-link" href="/archives">归档</a>
           
         
@@ -90,8 +88,6 @@
       
         <li><a href="/">首页</a></li>
       
-        <li><a href="/categories/life">生活</a></li>
-      
         <li><a href="/archives">归档</a></li>
       
       
@@ -100,6 +96,337 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+
+    
+    <article id="javascript-严格模式" class="article article-type-javascript" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/31/%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time datetime="2020-12-31T00:47:44.000Z" itemprop="datePublished">2020-12-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/31/%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/">严格模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一、概述</strong></p>
+<p>除了正常运行模式，ECMAscript 5添加了第二种运行模式：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode">“严格模式”</a>（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。</p>
+<p>设立”严格模式”的目的，主要有以下几个：</p>
+<blockquote>
+<p>　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;</p>
+<p>　　- 消除代码运行的一些不安全之处，保证代码运行的安全；</p>
+<p>　　- 提高编译器效率，增加运行速度；</p>
+<p>　　- 为未来新版本的Javascript做好铺垫。</p>
+</blockquote>
+<p>“严格模式”体现了Javascript更合理、更安全、更严谨的发展方向，包括IE 10在内的主流浏览器，都已经<a target="_blank" rel="noopener" href="http://kangax.github.com/es5-compat-table">支持</a>它，许多大项目已经开始全面拥抱它。</p>
+<p>另一方面，同样的代码，在”严格模式”中，可能会有不一样的运行结果；一些在”正常模式”下可以运行的语句，在”严格模式”下将不能运行。掌握这些内容，有助于更细致深入地理解Javascript，让你变成一个更好的程序员。</p>
+<p><strong>二、进入标志</strong></p>
+<p>进入”严格模式”的标志，是下面这行语句：</p>
+<blockquote>
+<p>　　“use strict”;</p>
+</blockquote>
+<p>老版本的浏览器会把它当作一行普通字符串，加以忽略。</p>
+<p><strong>3.1 针对整个脚本文件</strong></p>
+<p>将”use strict”放在脚本文件的第一行，则整个脚本都将以”严格模式”运行。如果这行语句不在第一行，则无效，整个脚本以”正常模式”运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。</p>
+<p>(严格地说，只要前面不是产生实际运行结果的语句，”use strict”可以不在第一行，比如直接跟在一个空的分号后面。)</p>
+<blockquote>
+<p>　　<script>　　　　"use strict";　　　　console.log("这是严格模式。");　　</script></p>
+<p>　　<script>　　　　console.log("这是正常模式。");kly, it's almost 2 years ago now. I can admit it now - I run it on my school's network that has about 50 computers.　　</script></p>
+</blockquote>
+<p>上面的代码表示，一个网页中依次有两段Javascript代码。前一个script标签是严格模式，后一个不是。</p>
+<p><strong>3.2 针对单个函数</strong></p>
+<p>将”use strict”放在函数体的第一行，则整个函数以”严格模式”运行。</p>
+<blockquote>
+<p>　　function strict(){<br>　　　　“use strict”;<br>　　　　return “这是严格模式。”;<br>　　}</p>
+<p>　　function notStrict() {<br>　　　　return “这是正常模式。”;<br>　　}</p>
+</blockquote>
+<p><strong>3.3 脚本文件的变通写法</strong></p>
+<p>因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<blockquote>
+<p>　　(function (){</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　// some code here</p>
+<p>　　 })();</p>
+</blockquote>
+<p><strong>四、语法和行为改变</strong></p>
+<p>严格模式对Javascript的语法和行为，都做了一些改变。</p>
+<p><strong>4.1 全局变量显式声明</strong></p>
+<p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<blockquote>
+<p>“use strict”;</p>
+<p>　　v = 1; // 报错，v未声明</p>
+<p>　　for(i = 0; i &lt; 2; i++) { // 报错，i未声明<br>　　}</p>
+</blockquote>
+<p>因此，严格模式下，变量都必须先用var命令声明，然后再使用。</p>
+<p><strong>4.2 静态绑定</strong></p>
+<p>Javascript语言的一个特点，就是允许”动态绑定”，即某些属性和方法到底属于哪一个对象，不是在编译时确定的，而是在运行时（runtime）确定的。</p>
+<p>严格模式对动态绑定做了一些限制。某些情况下，只允许静态绑定。也就是说，属性和方法到底归属哪个对象，在编译阶段就确定。这样做有利于编译效率的提高，也使得代码更容易阅读，更少出现意外。</p>
+<p>具体来说，涉及以下几个方面。</p>
+<p><strong>（1）禁止使用with语句</strong></p>
+<p>因为with语句无法在编译时就确定，属性到底归属哪个对象。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var v = 1;</p>
+<p>　　with (o){ // 语法错误<br>　　　　v = 2;<br>　　}</p>
+</blockquote>
+<p><strong>（2）创设eval作用域</strong></p>
+<p>正常模式下，Javascript语言有两种变量作用域（scope）：全局作用域和函数作用域。严格模式创设了第三种作用域：eval作用域。</p>
+<p>正常模式下，eval语句的作用域，取决于它处于全局作用域，还是处于函数作用域。严格模式下，eval语句本身就是一个作用域，不再能够生成全局变量了，它所生成的变量只能用于eval内部。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var x = 2;</p>
+<p>　　console.info(eval(“var x = 5; x”)); // 5</p>
+<p>　　console.info(x); // 2</p>
+</blockquote>
+<p><strong>4.3 增强的安全措施</strong></p>
+<p><strong>（1）禁止this关键字指向全局对象</strong></p>
+<blockquote>
+<p>　　function f(){<br>　　　　return !this;<br>　　}<br>　　// 返回false，因为”this”指向全局对象，”!this”就是false</p>
+<p>　　function f(){<br>　　　　“use strict”;<br>　　　　return !this;<br>　　}<br>　　// 返回true，因为严格模式下，this的值为undefined，所以”!this”为true。</p>
+</blockquote>
+<p>因此，使用构造函数时，如果忘了加new，this不再指向全局对象，而是报错。</p>
+<blockquote>
+<p>　　function f(){</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　this.a = 1;</p>
+<p>　　};</p>
+<p>　　f();// 报错，this未定义</p>
+</blockquote>
+<p><strong>（2）禁止在函数内部遍历调用栈</strong></p>
+<blockquote>
+<p>　　function f1(){</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　f1.caller; // 报错</p>
+<p>　　　　f1.arguments; // 报错</p>
+<p>　　}</p>
+<p>　　f1();</p>
+</blockquote>
+<p><strong>4.4 禁止删除变量</strong></p>
+<p>严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var x;</p>
+<p>　　delete x; // 语法错误</p>
+<p>　　var o = Object.create(null, {‘x’: {<br>　　　　　　value: 1,<br>　　　　　　configurable: true<br>　　}});</p>
+<p>　　delete o.x; // 删除成功</p>
+</blockquote>
+<p><strong>4.5 显式报错</strong></p>
+<p>正常模式下，对一个对象的只读属性进行赋值，不会报错，只会默默地失败。严格模式下，将报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {};</p>
+<p>　　Object.defineProperty(o, “v”, { value: 1, writable: false });</p>
+<p>　　o.v = 2; // 报错</p>
+</blockquote>
+<p>严格模式下，对一个使用getter方法读取的属性进行赋值，会报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {</p>
+<p>　　　　get v() { return 1; }</p>
+<p>　　};</p>
+<p>　　o.v = 2; // 报错</p>
+</blockquote>
+<p>严格模式下，对禁止扩展的对象添加新属性，会报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {};</p>
+<p>　　Object.preventExtensions(o);</p>
+<p>　　o.v = 1; // 报错</p>
+</blockquote>
+<p>严格模式下，删除一个不可删除的属性，会报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　delete Object.prototype; // 报错</p>
+</blockquote>
+<p><strong>4.6 重名错误</strong></p>
+<p>严格模式新增了一些语法错误。</p>
+<p><strong>（1）对象不能有重名的属性</strong></p>
+<p>正常模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {<br>　　　　p: 1,<br>　　　　p: 2<br>　　}; // 语法错误</p>
+</blockquote>
+<p><strong>（2）函数不能有重名的参数</strong></p>
+<p>正常模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，这属于语法错误。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　function f(a, a, b) { // 语法错误</p>
+<p>　　　　return ;</p>
+<p>　　}</p>
+</blockquote>
+<p><strong>4.7 禁止八进制表示法</strong></p>
+<p>正常模式下，整数的第一位如果是0，表示这是八进制数，比如0100等于十进制的64。严格模式禁止这种表示法，整数第一位为0，将报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var n = 0100; // 语法错误</p>
+</blockquote>
+<p><strong>4.8 arguments对象的限制</strong></p>
+<p>arguments是函数的参数对象，严格模式对它的使用做了限制。</p>
+<p><strong>（1）不允许对arguments赋值</strong></p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　arguments++; // 语法错误</p>
+<p>　　var obj = { set p(arguments) { } }; // 语法错误</p>
+<p>　　try { } catch (arguments) { } // 语法错误</p>
+<p>　　function arguments() { } // 语法错误</p>
+<p>　　var f = new Function(“arguments”, “‘use strict’; return 17;”); // 语法错误</p>
+</blockquote>
+<p><strong>（2）arguments不再追踪参数的变化</strong></p>
+<blockquote>
+<p>　　function f(a) {</p>
+<p>　　　　a = 2;</p>
+<p>　　　　return [a, arguments[0]];</p>
+<p>　　}</p>
+<p>　　f(1); // 正常模式为[2,2]</p>
+<p>　　function f(a) {</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　a = 2;</p>
+<p>　　　　return [a, arguments[0]];</p>
+<p>　　}</p>
+<p>　　f(1); // 严格模式为[2,1]</p>
+</blockquote>
+<p><strong>（3）禁止使用arguments.callee</strong></p>
+<p>这意味着，你无法在匿名函数内部调用自身了。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var f = function() { return arguments.callee; };</p>
+<p>　　f(); // 报错</p>
+</blockquote>
+<p><strong>4.9 函数必须声明在顶层</strong></p>
+<p>将来Javascript的新版本会引入”块级作用域”。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　if (true) {</p>
+<p>　　　　function f() { } // 语法错误</p>
+<p>　　}</p>
+<p>　　for (var i = 0; i &lt; 5; i++) {</p>
+<p>　　　　function f2() { } // 语法错误</p>
+<p>　　}</p>
+</blockquote>
+<p><strong>4.10 保留字</strong></p>
+<p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
+<p>使用这些词作为变量名将会报错。</p>
+<blockquote>
+<p>　　function package(protected) { // 语法错误</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　var implements; // 语法错误</p>
+<p>　　}</p>
+</blockquote>
+<p>此外，ECMAscript第五版本身还规定了另一些保留字（class, enum, export, extends, import, super），以及各大浏览器自行增加的const保留字，也是不能作为变量名的。</p>
+<p><strong>五、参考链接</strong></p>
+<p>- MDN, <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode">Strict mode</a><br>- Dr. Axel Rauschmayer，<a target="_blank" rel="noopener" href="http://www.2ality.com/2011/01/javascripts-strict-mode-summary.html">JavaScript’s strict mode: a summary</a><br>- Douglas Crockford, <a target="_blank" rel="noopener" href="http://java-script.limewebs.com/strictMode/test_hosted.html">Strict Mode Is Coming To Town</a></p>
+<p>（完）</p>
+<p>转载自 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html">http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://example.com/2020/12/31/%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/" data-id="ckmvs5ua30003fsvxb9qqhu5v" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+    
+  
+
+    
+    <article id="post-TypeScript笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/29/TypeScript%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2020-12-29T11:51:10.000Z" itemprop="datePublished">2020-12-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/29/TypeScript%E7%AC%94%E8%AE%B0/">TypeScript笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="JavaScript-与-TypeScript-的区别"><a href="#JavaScript-与-TypeScript-的区别" class="headerlink" title="JavaScript 与 TypeScript 的区别"></a>JavaScript 与 TypeScript 的区别</h2><p>TypeScript 是 JavaScript 的超集，扩展了 JavaScript 的语法，因此现有的 JavaScript 代码可与 TypeScript 一起工作无需任何修改，TypeScript 通过类型注解提供编译时的静态类型检查。<br>TypeScript 可处理已有的 JavaScript 代码，并只对其中的 TypeScript 代码进行编译。</p>
+<h2 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h2><h3 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> isDone: boolean = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><p>和JavaScript一样，TypeScript里的所有数字都是浮点数。 这些浮点数的类型是 number。 除了支持十进制和十六进制字面量，TypeScript还支持ECMAScript 2015中引入的二进制和八进制字面量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> decLiteral: number = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">let</span> hexLiteral: number = <span class="number">0xf00d</span>;</span><br><span class="line"><span class="keyword">let</span> binaryLiteral: number = <span class="number">0b1010</span>;</span><br><span class="line"><span class="keyword">let</span> octalLiteral: number = <span class="number">0o744</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>支持单引号(‘)双引号(“)反引号(`)用${str}嵌入的表达式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name: string = <span class="string">&quot;bob&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> name: string = <span class="string">`Gene`</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>TypeScript像JavaScript一样可以操作数组元素。 有两种方式可以定义数组。 第一种，可以在元素类型后面接上 []，表示由此类型元素组成的一个数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list: number[] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<p>第二种方式是使用数组泛型，Array&lt;元素类型&gt;：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list: <span class="built_in">Array</span>&lt;number&gt; = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="元组-Tuple"><a href="#元组-Tuple" class="headerlink" title="元组 Tuple"></a>元组 Tuple</h3><p>元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同。 比如，你可以定义一对值分别为 string和number类型的元组。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x: [string, number]=[<span class="string">&quot;1&quot;</span>,<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><p>enum类型是对JavaScript标准数据类型的一个补充。 像C#等其它语言一样，使用枚举类型可以为一组数值赋予友好的名字。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red, Green, Blue&#125;</span><br><span class="line"><span class="keyword">let</span> c: Color = Color.Green;</span><br></pre></td></tr></table></figure>
+<p>默认情况下，从0开始为元素编号。 你也可以手动的指定成员的数值。 例如，我们将上面的例子改成从 1开始编号：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = <span class="number">1</span>, Green, Blue&#125;</span><br><span class="line"><span class="keyword">let</span> c: Color = Color.Green;</span><br></pre></td></tr></table></figure>
+<p>或者，全部都采用手动赋值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = <span class="number">1</span>, Green = <span class="number">2</span>, Blue = <span class="number">4</span>&#125;</span><br><span class="line"><span class="keyword">let</span> c: Color = Color.Green;</span><br></pre></td></tr></table></figure>
+<p>枚举类型提供的一个便利是你可以由枚举的值得到它的名字。 例如，我们知道数值为2，但是不确定它映射到Color里的哪个名字，我们可以查找相应的名字：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = <span class="number">1</span>, Green, Blue&#125;</span><br><span class="line"><span class="keyword">let</span> colorName: string = Color[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(colorName);  <span class="comment">// 显示&#x27;Green&#x27;因为上面代码里它的值是2</span></span><br></pre></td></tr></table></figure>
+<h3 id="Any"><a href="#Any" class="headerlink" title="Any"></a>Any</h3><p>在编程阶段还不清楚类型的变量指定一个类型。 这些值可能来自于动态的内容，比如来自用户输入或第三方代码库。 这种情况下，我们不希望类型检查器对这些值进行检查而是直接让它们通过编译阶段的检查。 那么我们可以使用 any类型来标记这些变量：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list: any[] = [<span class="number">1</span>, <span class="literal">true</span>, <span class="string">&quot;free&quot;</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="Void"><a href="#Void" class="headerlink" title="Void"></a>Void</h3><p>某种程度上来说，void类型像是与any类型相反，它表示没有任何类型。 当一个函数没有返回值时，你通常会见到其返回值类型是 void：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">warnUser</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;This is my warning message&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>声明一个void类型的变量没有什么大用，因为你只能为它赋予undefined和null：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> unusable: <span class="keyword">void</span> = <span class="literal">undefined</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Null-和-Undefined"><a href="#Null-和-Undefined" class="headerlink" title="Null 和 Undefined"></a>Null 和 Undefined</h3><p>TypeScript里，undefined和null两者各自有自己的类型分别叫做undefined和null。 和 void相似，它们的本身的类型用处不是很大：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Not much else we can assign to these variables!</span></span><br><span class="line"><span class="keyword">let</span> u: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">let</span> n: <span class="literal">null</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p>默认情况下null和undefined是所有类型的子类型。 就是说你可以把 null和undefined赋值给number类型的变量。</p>
+<h3 id="Never"><a href="#Never" class="headerlink" title="Never"></a>Never</h3><p>never类型表示的是那些永不存在的值的类型。 例如， never类型是那些总是会抛出异常或根本就不会有返回值的函数表达式或箭头函数表达式的返回值类型； 变量也可能是 never类型，当它们被永不为真的类型保护所约束时。</p>
+<p>never类型是任何类型的子类型，也可以赋值给任何类型；然而，没有类型是never的子类型或可以赋值给never类型（除了never本身之外）。 即使 any也不可以赋值给never。</p>
+<p>下面是一些返回never类型的函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回never的函数必须存在无法达到的终点</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">error</span>(<span class="params">message: string</span>): <span class="title">never</span> </span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 推断的返回值类型为never</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fail</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> error(<span class="string">&quot;Something failed&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回never的函数必须存在无法达到的终点</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">infiniteLoop</span>(<span class="params"></span>): <span class="title">never</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><p>object表示非原始类型，也就是除number，string，boolean，symbol，null或undefined之外的类型。</p>
+<p>使用object类型，就可以更好的表示像Object.create这样的API。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">declare <span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params">o: object | <span class="literal">null</span></span>): <span class="title">void</span></span>;</span><br><span class="line"></span><br><span class="line">create(&#123; <span class="attr">prop</span>: <span class="number">0</span> &#125;); <span class="comment">// OK</span></span><br><span class="line">create(<span class="literal">null</span>); <span class="comment">// OK</span></span><br><span class="line"></span><br><span class="line">create(<span class="number">42</span>); <span class="comment">// Error</span></span><br><span class="line">create(<span class="string">&quot;string&quot;</span>); <span class="comment">// Error</span></span><br><span class="line">create(<span class="literal">false</span>); <span class="comment">// Error</span></span><br><span class="line">create(<span class="literal">undefined</span>); <span class="comment">// Error</span></span><br></pre></td></tr></table></figure>
+<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>类型断言有两种形式。 其一是“尖括号”语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> someValue: any = <span class="string">&quot;this is a string&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> strLength: number = (&lt;string&gt;someValue).length;</span><br></pre></td></tr></table></figure>
+<p>另一个为as语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> someValue: any = <span class="string">&quot;this is a string&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> strLength: number = (someValue <span class="keyword">as</span> string).length;</span><br></pre></td></tr></table></figure>
+<p>两种形式是等价的。 至于使用哪个大多数情况下是凭个人喜好；然而，当你在TypeScript里使用JSX时，只有 as语法断言是被允许的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://example.com/2020/12/29/TypeScript%E7%AC%94%E8%AE%B0/" data-id="ckmvs5u9e0000fsvxch4agtp2" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+    
   
 
     
@@ -172,7 +499,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://example.com/2020/12/28/class/" data-id="ckj8krois00009cvx8vgq4trb" class="article-share-link">Share</a>
+        <a data-url="http://example.com/2020/12/28/class/" data-id="ckmvs5u9t0001fsvx2ren1yow" class="article-share-link">Share</a>
       
 
       
@@ -397,7 +724,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://example.com/2020/12/27/hook/" data-id="ckj8krol200039cvxdm95by5z" class="article-share-link">Share</a>
+        <a data-url="http://example.com/2020/12/27/hook/" data-id="ckmvs5uc30005fsvxc3pvf3t4" class="article-share-link">Share</a>
       
 
       
@@ -467,7 +794,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://example.com/2020/12/25/%E4%BB%80%E4%B9%88%E6%98%AFBFC/" data-id="ckj8krokr00029cvx5qjwd4ga" class="article-share-link">Share</a>
+        <a data-url="http://example.com/2020/12/25/%E4%BB%80%E4%B9%88%E6%98%AFBFC/" data-id="ckmvs5ua50004fsvx7pm58nkl" class="article-share-link">Share</a>
       
 
       
@@ -517,7 +844,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://example.com/2020/12/25/hello-world/" data-id="ckj8kroko00019cvx2qjxexfj" class="article-share-link">Share</a>
+        <a data-url="http://example.com/2020/12/25/hello-world/" data-id="ckmvs5u9w0002fsvx8im0d9x2" class="article-share-link">Share</a>
       
 
       
@@ -537,7 +864,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2020 彭博<br>
+      &copy; 2021 彭博<br>
       Theme <a href="https://github.com/henryhuang/oishi" target="_blank">Oishi</a>, Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -547,8 +874,6 @@
       <nav id="mobile-nav">
   
     <a href="/" class="mobile-nav-link">首页</a>
-  
-    <a href="/categories/life" class="mobile-nav-link">生活</a>
   
     <a href="/archives" class="mobile-nav-link">归档</a>
   

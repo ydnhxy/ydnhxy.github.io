@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>严格模式 | 彭先生的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、概述 除了正常运行模式，ECMAscript 5添加了第二种运行模式：“严格模式”（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。 设立”严格模式”的目的，主要有以下几个：  　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为; 　　- 消除代码运行的一些不安全之处，保证代码运行的安全； 　　- 提高编译器效率，增加运行速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="严格模式">
+<meta property="og:url" content="http://example.com/2020/12/31/%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="彭先生的个人博客">
+<meta property="og:description" content="一、概述 除了正常运行模式，ECMAscript 5添加了第二种运行模式：“严格模式”（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。 设立”严格模式”的目的，主要有以下几个：  　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为; 　　- 消除代码运行的一些不安全之处，保证代码运行的安全； 　　- 提高编译器效率，增加运行速">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-31T00:47:44.000Z">
+<meta property="article:modified_time" content="2020-12-31T00:56:38.967Z">
+<meta property="article:author" content="彭博">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/scrollUp/image.css">
+
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.png" alt="Profile Picture">
+      </div>
+      <div id="title">彭先生的个人博客</div>
+      
+       <ul class="my-socials">
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          
+            <a class="main-nav-link" href="/">首页</a>
+          
+            <a class="main-nav-link" href="/archives">归档</a>
+          
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">彭先生的个人博客</a>
+      <img src="/logo.png" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="example.com">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+      
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+      
+    </ul>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="javascript-严格模式" class="article article-type-javascript" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/12/31/%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time datetime="2020-12-31T00:47:44.000Z" itemprop="datePublished">2020-12-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      严格模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一、概述</strong></p>
+<p>除了正常运行模式，ECMAscript 5添加了第二种运行模式：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode">“严格模式”</a>（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。</p>
+<p>设立”严格模式”的目的，主要有以下几个：</p>
+<blockquote>
+<p>　　- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;</p>
+<p>　　- 消除代码运行的一些不安全之处，保证代码运行的安全；</p>
+<p>　　- 提高编译器效率，增加运行速度；</p>
+<p>　　- 为未来新版本的Javascript做好铺垫。</p>
+</blockquote>
+<p>“严格模式”体现了Javascript更合理、更安全、更严谨的发展方向，包括IE 10在内的主流浏览器，都已经<a target="_blank" rel="noopener" href="http://kangax.github.com/es5-compat-table">支持</a>它，许多大项目已经开始全面拥抱它。</p>
+<p>另一方面，同样的代码，在”严格模式”中，可能会有不一样的运行结果；一些在”正常模式”下可以运行的语句，在”严格模式”下将不能运行。掌握这些内容，有助于更细致深入地理解Javascript，让你变成一个更好的程序员。</p>
+<p><strong>二、进入标志</strong></p>
+<p>进入”严格模式”的标志，是下面这行语句：</p>
+<blockquote>
+<p>　　“use strict”;</p>
+</blockquote>
+<p>老版本的浏览器会把它当作一行普通字符串，加以忽略。</p>
+<p><strong>3.1 针对整个脚本文件</strong></p>
+<p>将”use strict”放在脚本文件的第一行，则整个脚本都将以”严格模式”运行。如果这行语句不在第一行，则无效，整个脚本以”正常模式”运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。</p>
+<p>(严格地说，只要前面不是产生实际运行结果的语句，”use strict”可以不在第一行，比如直接跟在一个空的分号后面。)</p>
+<blockquote>
+<p>　　<script>　　　　"use strict";　　　　console.log("这是严格模式。");　　</script></p>
+<p>　　<script>　　　　console.log("这是正常模式。");kly, it's almost 2 years ago now. I can admit it now - I run it on my school's network that has about 50 computers.　　</script></p>
+</blockquote>
+<p>上面的代码表示，一个网页中依次有两段Javascript代码。前一个script标签是严格模式，后一个不是。</p>
+<p><strong>3.2 针对单个函数</strong></p>
+<p>将”use strict”放在函数体的第一行，则整个函数以”严格模式”运行。</p>
+<blockquote>
+<p>　　function strict(){<br>　　　　“use strict”;<br>　　　　return “这是严格模式。”;<br>　　}</p>
+<p>　　function notStrict() {<br>　　　　return “这是正常模式。”;<br>　　}</p>
+</blockquote>
+<p><strong>3.3 脚本文件的变通写法</strong></p>
+<p>因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<blockquote>
+<p>　　(function (){</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　// some code here</p>
+<p>　　 })();</p>
+</blockquote>
+<p><strong>四、语法和行为改变</strong></p>
+<p>严格模式对Javascript的语法和行为，都做了一些改变。</p>
+<p><strong>4.1 全局变量显式声明</strong></p>
+<p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<blockquote>
+<p>“use strict”;</p>
+<p>　　v = 1; // 报错，v未声明</p>
+<p>　　for(i = 0; i &lt; 2; i++) { // 报错，i未声明<br>　　}</p>
+</blockquote>
+<p>因此，严格模式下，变量都必须先用var命令声明，然后再使用。</p>
+<p><strong>4.2 静态绑定</strong></p>
+<p>Javascript语言的一个特点，就是允许”动态绑定”，即某些属性和方法到底属于哪一个对象，不是在编译时确定的，而是在运行时（runtime）确定的。</p>
+<p>严格模式对动态绑定做了一些限制。某些情况下，只允许静态绑定。也就是说，属性和方法到底归属哪个对象，在编译阶段就确定。这样做有利于编译效率的提高，也使得代码更容易阅读，更少出现意外。</p>
+<p>具体来说，涉及以下几个方面。</p>
+<p><strong>（1）禁止使用with语句</strong></p>
+<p>因为with语句无法在编译时就确定，属性到底归属哪个对象。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var v = 1;</p>
+<p>　　with (o){ // 语法错误<br>　　　　v = 2;<br>　　}</p>
+</blockquote>
+<p><strong>（2）创设eval作用域</strong></p>
+<p>正常模式下，Javascript语言有两种变量作用域（scope）：全局作用域和函数作用域。严格模式创设了第三种作用域：eval作用域。</p>
+<p>正常模式下，eval语句的作用域，取决于它处于全局作用域，还是处于函数作用域。严格模式下，eval语句本身就是一个作用域，不再能够生成全局变量了，它所生成的变量只能用于eval内部。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var x = 2;</p>
+<p>　　console.info(eval(“var x = 5; x”)); // 5</p>
+<p>　　console.info(x); // 2</p>
+</blockquote>
+<p><strong>4.3 增强的安全措施</strong></p>
+<p><strong>（1）禁止this关键字指向全局对象</strong></p>
+<blockquote>
+<p>　　function f(){<br>　　　　return !this;<br>　　}<br>　　// 返回false，因为”this”指向全局对象，”!this”就是false</p>
+<p>　　function f(){<br>　　　　“use strict”;<br>　　　　return !this;<br>　　}<br>　　// 返回true，因为严格模式下，this的值为undefined，所以”!this”为true。</p>
+</blockquote>
+<p>因此，使用构造函数时，如果忘了加new，this不再指向全局对象，而是报错。</p>
+<blockquote>
+<p>　　function f(){</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　this.a = 1;</p>
+<p>　　};</p>
+<p>　　f();// 报错，this未定义</p>
+</blockquote>
+<p><strong>（2）禁止在函数内部遍历调用栈</strong></p>
+<blockquote>
+<p>　　function f1(){</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　f1.caller; // 报错</p>
+<p>　　　　f1.arguments; // 报错</p>
+<p>　　}</p>
+<p>　　f1();</p>
+</blockquote>
+<p><strong>4.4 禁止删除变量</strong></p>
+<p>严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var x;</p>
+<p>　　delete x; // 语法错误</p>
+<p>　　var o = Object.create(null, {‘x’: {<br>　　　　　　value: 1,<br>　　　　　　configurable: true<br>　　}});</p>
+<p>　　delete o.x; // 删除成功</p>
+</blockquote>
+<p><strong>4.5 显式报错</strong></p>
+<p>正常模式下，对一个对象的只读属性进行赋值，不会报错，只会默默地失败。严格模式下，将报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {};</p>
+<p>　　Object.defineProperty(o, “v”, { value: 1, writable: false });</p>
+<p>　　o.v = 2; // 报错</p>
+</blockquote>
+<p>严格模式下，对一个使用getter方法读取的属性进行赋值，会报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {</p>
+<p>　　　　get v() { return 1; }</p>
+<p>　　};</p>
+<p>　　o.v = 2; // 报错</p>
+</blockquote>
+<p>严格模式下，对禁止扩展的对象添加新属性，会报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {};</p>
+<p>　　Object.preventExtensions(o);</p>
+<p>　　o.v = 1; // 报错</p>
+</blockquote>
+<p>严格模式下，删除一个不可删除的属性，会报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　delete Object.prototype; // 报错</p>
+</blockquote>
+<p><strong>4.6 重名错误</strong></p>
+<p>严格模式新增了一些语法错误。</p>
+<p><strong>（1）对象不能有重名的属性</strong></p>
+<p>正常模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var o = {<br>　　　　p: 1,<br>　　　　p: 2<br>　　}; // 语法错误</p>
+</blockquote>
+<p><strong>（2）函数不能有重名的参数</strong></p>
+<p>正常模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，这属于语法错误。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　function f(a, a, b) { // 语法错误</p>
+<p>　　　　return ;</p>
+<p>　　}</p>
+</blockquote>
+<p><strong>4.7 禁止八进制表示法</strong></p>
+<p>正常模式下，整数的第一位如果是0，表示这是八进制数，比如0100等于十进制的64。严格模式禁止这种表示法，整数第一位为0，将报错。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var n = 0100; // 语法错误</p>
+</blockquote>
+<p><strong>4.8 arguments对象的限制</strong></p>
+<p>arguments是函数的参数对象，严格模式对它的使用做了限制。</p>
+<p><strong>（1）不允许对arguments赋值</strong></p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　arguments++; // 语法错误</p>
+<p>　　var obj = { set p(arguments) { } }; // 语法错误</p>
+<p>　　try { } catch (arguments) { } // 语法错误</p>
+<p>　　function arguments() { } // 语法错误</p>
+<p>　　var f = new Function(“arguments”, “‘use strict’; return 17;”); // 语法错误</p>
+</blockquote>
+<p><strong>（2）arguments不再追踪参数的变化</strong></p>
+<blockquote>
+<p>　　function f(a) {</p>
+<p>　　　　a = 2;</p>
+<p>　　　　return [a, arguments[0]];</p>
+<p>　　}</p>
+<p>　　f(1); // 正常模式为[2,2]</p>
+<p>　　function f(a) {</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　a = 2;</p>
+<p>　　　　return [a, arguments[0]];</p>
+<p>　　}</p>
+<p>　　f(1); // 严格模式为[2,1]</p>
+</blockquote>
+<p><strong>（3）禁止使用arguments.callee</strong></p>
+<p>这意味着，你无法在匿名函数内部调用自身了。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　var f = function() { return arguments.callee; };</p>
+<p>　　f(); // 报错</p>
+</blockquote>
+<p><strong>4.9 函数必须声明在顶层</strong></p>
+<p>将来Javascript的新版本会引入”块级作用域”。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<blockquote>
+<p>　　“use strict”;</p>
+<p>　　if (true) {</p>
+<p>　　　　function f() { } // 语法错误</p>
+<p>　　}</p>
+<p>　　for (var i = 0; i &lt; 5; i++) {</p>
+<p>　　　　function f2() { } // 语法错误</p>
+<p>　　}</p>
+</blockquote>
+<p><strong>4.10 保留字</strong></p>
+<p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
+<p>使用这些词作为变量名将会报错。</p>
+<blockquote>
+<p>　　function package(protected) { // 语法错误</p>
+<p>　　　　“use strict”;</p>
+<p>　　　　var implements; // 语法错误</p>
+<p>　　}</p>
+</blockquote>
+<p>此外，ECMAscript第五版本身还规定了另一些保留字（class, enum, export, extends, import, super），以及各大浏览器自行增加的const保留字，也是不能作为变量名的。</p>
+<p><strong>五、参考链接</strong></p>
+<p>- MDN, <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Functions_and_function_scope/Strict_mode">Strict mode</a><br>- Dr. Axel Rauschmayer，<a target="_blank" rel="noopener" href="http://www.2ality.com/2011/01/javascripts-strict-mode-summary.html">JavaScript’s strict mode: a summary</a><br>- Douglas Crockford, <a target="_blank" rel="noopener" href="http://java-script.limewebs.com/strictMode/test_hosted.html">Strict Mode Is Coming To Town</a></p>
+<p>（完）</p>
+<p>转载自 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html">http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://example.com/2020/12/31/%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/" data-id="ckmvs5ua30003fsvxb9qqhu5v" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/29/TypeScript%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TypeScript笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 彭博<br>
+      Theme <a href="https://github.com/henryhuang/oishi" target="_blank">Oishi</a>, Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+
+
+<script src="/js/jquery.transform.js"></script>
+
+
+<script src="/js/menu.js"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/scrollUp.js"></script>
+
+
+  </div>
+</body>
+</html>
